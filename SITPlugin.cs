@@ -6,12 +6,17 @@ using System.Linq;
 #region Toolbox DLL references
 
 /*in order to build this, 
- * Install the Operational-Scale CBM-CF3 Toolbox
- * add references to the following toolbox dll files
- * CBMSIT.dll
+ * 1. Install the Operational-Scale CBM-CF3 Toolbox
  * 
- * These files can be found in your installation directory. For example
- * here: C:\Program Files (x86)\Operational-Scale CBM-CFS3\CBMSIT.dll
+ * 2. Add references to the following toolbox dll files:
+ *    CBMSIT.dll
+ *    StringUtilities.dll
+ *    Interfaces.dll
+ *    WoodStockImportTool.dll
+ *    Global.dll
+ * 
+ *    These files can be found in your installation directory. For example
+ *    here: C:\Program Files (x86)\Operational-Scale CBM-CFS3\CBMSIT.dll
  * 
  * 
  */
@@ -26,11 +31,11 @@ using log4net;
 namespace StandardImportToolPlugin
 {
 
-    /// <summary>
-    /// Allows importing of CBM-CFS3 project via Iron Python.
-    /// </summary>
+
     public class Sitplugin
     {
+        public static string ForestOnly = Global.StringUtilities.GetStringResource("SLPCForestOnlyClassifierValue");// "Forest Only";
+
         const string DefaultArchiveIndexPath = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Admin\DBs\ArchiveIndex_Beta_Install.mdb";
         const string DefaultInputDBTemplatePath = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Admin\DBs\InputDB_Template.mdb";
 
@@ -761,6 +766,20 @@ namespace StandardImportToolPlugin
             mapping.SpatialUnitOptions.SPUClassifier = SPU;
         }
         /// <summary>
+        /// use for the case where a seperate classifier defines non-forest cover types
+        /// </summary>
+        /// <param name="nonForestClassifier">the non-forest classifier name</param>
+        public void SetNonForestClassifier(string nonForestClassifier)
+        {
+            SetNonForestClassifier(Classifiers[nonForestClassifier]);
+        }
+        private void SetNonForestClassifier(Classifier nonforestClassifier)
+        {
+            mapping.SpeciesOptions.SpeciesANDNonForestClassifier = false;
+            mapping.NonForestOptions.HasClassifier = true;
+            mapping.NonForestOptions.NonForestClassifier = nonforestClassifier;
+        }
+        /// <summary>
         /// add mapping for a disturbance type name
         /// </summary>
         /// <param name="ProjectDistName">the name of a disturbance type as defined in your data</param>
@@ -810,7 +829,8 @@ namespace StandardImportToolPlugin
         /// <param name="EcoBoundaryName">the eco boundary name of the spatial unit to map</param>
         public void MapSpatialUnit(string ProjectSPUName, string AdminBoundaryName, string EcoBoundaryName)
         {
-            var matches = DefaultRows.DefaultSPUsByName.Where(a => a.Key.Contains(AdminBoundaryName) && a.Key.Contains(EcoBoundaryName));
+            var matches = DefaultRows.DefaultSPUsByName
+                .Where(a => a.Key.Contains(AdminBoundaryName) && a.Key.Contains(EcoBoundaryName));
             if (!matches.Any())
             {
                 throw new ArgumentException(String.Format("Cannot find Default SPUID {0} - {1}",
@@ -821,18 +841,35 @@ namespace StandardImportToolPlugin
         /// <summary>
         /// Set a name map for a CBM species which appears in the archive index
         /// </summary>
-        /// <param name="ProjectName">The name of your species as defined in your data</param>
+        /// <param name="ProjectSpeciesName">The name of your species as defined in your data</param>
         /// <param name="DefaultName">A CBM default species as it appears in the archive index</param>
-        public void MapSpecies(string ProjectName, string DefaultName)
+        public void MapSpecies(string ProjectSpeciesName, string DefaultName)
         {
             if (!DefaultRows.DefaultSpeciesTypeRowsByName.ContainsKey(DefaultName))
             {
-                throw new ArgumentException(
-                    string.Format("Can't find species name {0} in archive index", DefaultName));
+                if (DefaultRows.DefaultNonForestTypeRowsByName.ContainsKey(DefaultName))
+                {
+                    if (mapping.NonForestOptions.HasClassifier)
+                    {
+                        throw new ArgumentException("if a non forest " +
+                            "classifier is specified, do not map values " +
+                            "from the species classifier to non-forest types");
+                    }
+                    mapping.SpeciesOptions.SpeciesANDNonForestClassifier = true;
+                }
+                else {
+
+                    throw new ArgumentException(
+                        string.Format("Can't find species name {0} in archive index", DefaultName));
+                }
             }
-            mapping.SpeciesOptions.SpeciesTypeMappings.Add(ProjectName, DefaultName);
+            mapping.SpeciesOptions.SpeciesTypeMappings.Add(ProjectSpeciesName, DefaultName);
         }
 
+        public void MapNonForest(string projectNonForestName, string defaultName)
+        {
+            mapping.NonForestOptions.NonForestTypeMapping.Add(projectNonForestName, defaultName);
+        }
         private static MappingOptions CreateEmptyMapping()
         {
             MappingOptions Mapping = new MappingOptions();
