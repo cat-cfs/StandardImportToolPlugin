@@ -10,13 +10,13 @@ namespace StandardImportToolPlugin
 {
     public class JsonConfigLoader
     {
-        public void Load(string json)
+        public Sitplugin Load(string json)
         {
 
             JObject obj = JObject.Parse(json);
             string outputPath = (string)obj["outputpath"];
 
-            var importConfig = obj["importconfig"];
+            var importConfig = obj["import_config"];
             var userData = Sitplugin.ParseSITData(
                 path: (string)importConfig["path"],
                 AgeClassTableName: (string)importConfig["ageclass_table_name"],
@@ -28,31 +28,33 @@ namespace StandardImportToolPlugin
                 YieldTableName: (string)importConfig["yield_table_name"]
                 );
 
-            Sitplugin sitplugin = new Sitplugin(outputPath, false);
+            Sitplugin sitplugin = new Sitplugin(outputPath, false, userData);
 
-            var mappingConfig = obj["mapping"];
-            MapSpatialUnits(sitplugin, mappingConfig["spatialunits"]);
+            var mappingConfig = obj["mapping_config"];
+            MapSpatialUnits(sitplugin, mappingConfig["spatial_units"]);
             MapSpecies(sitplugin, mappingConfig["species"]);
             MapNonForest(sitplugin, mappingConfig["nonforest"]);
-            MapDisturbanceTypes(sitplugin, mappingConfig["disturbancetypes"]);
+            MapDisturbanceTypes(sitplugin, mappingConfig["disturbance_types"]);
 
+            return sitplugin;
         }
         private static void MapDisturbanceTypes(Sitplugin sitplugin, JToken mappingConfig)
         {
-            IDictionary<string, JToken> distTypeMap = (JObject)mappingConfig["disturbancetypemapping"];
-            foreach (var item in distTypeMap)
+            foreach (var item in mappingConfig["disturbance_type_mapping"])
             {
-                sitplugin.MapDisturbanceType(item.Key, (string)item.Value);
+                sitplugin.MapDisturbanceType(
+                    (string)item["user_dist_type"],
+                    (string)item["default_dist_type"]);
             }
         }
 
         private static void MapSpecies(Sitplugin sitplugin, JToken mappingConfig)
         {
-
-            sitplugin.SetSpeciesClassifier((string)mappingConfig["speciesclassifier"]);
-            IDictionary<string, JToken> speciesMap = (JObject)mappingConfig["speciesmapping"];
-            foreach (var item in speciesMap) {
-                sitplugin.MapSpecies(item.Key, (string)item.Value);
+            sitplugin.SetSpeciesClassifier((string)mappingConfig["species_classifier"]);
+            foreach (var item in mappingConfig["species_mapping"]) {
+                sitplugin.MapSpecies(
+                    (string)item["user_species"],
+                    (string)item["default_species"]);
             }
         }
 
@@ -63,47 +65,48 @@ namespace StandardImportToolPlugin
                 return;
             }
             sitplugin.SetNonForestClassifier((string)mappingConfig["nonforestclassifier"]);
-            IDictionary<string, JToken> nonforestMap = (JObject)mappingConfig["nonforestmapping"];
-            foreach (var item in nonforestMap)
+            foreach (var item in mappingConfig["nonforest_mapping"])
             {
-                sitplugin.MapNonForest(item.Key, (string)item.Value);
+                sitplugin.MapNonForest((string)item["user_nonforest_type"], (string)item["default_nonforest_type"]);
             }
         }
         private static void MapSpatialUnits(Sitplugin sitplugin, JToken mappingConfig)
         {
-            if (!Enum.TryParse((string)mappingConfig["mappingmode"], out SpatialUnitClassifierMode mode))
+            if (!Enum.TryParse((string)mappingConfig["mapping_mode"], out SpatialUnitClassifierMode mode))
             {
                 throw new ArgumentException("expected one of the SpatialUnitClassifierMode enum values");
             }
             switch (mode)
             {
                 case SpatialUnitClassifierMode.JoinedAdminEcoClassifier:
-                    sitplugin.SetSPUMapping((string)mappingConfig["SPUClassifier"]);
-                    IDictionary<string, JToken> spuValueMap = (JObject)mappingConfig["spumapping"];
-                    foreach (var item in spuValueMap)
+                    sitplugin.SetSPUMapping((string)mappingConfig["spu_classifier"]);
+                    foreach (var item in mappingConfig["spu_mapping"])
                     {
-                        sitplugin.MapSpatialUnit(item.Key,
-                            item.Value["adminboundary"].ToString(),
-                            item.Value["ecoboundary"].ToString());
+                        sitplugin.MapSpatialUnit(
+                            (string)item["user_spatial_unit"],
+                            (string)item["default_spatial_unit"]["admin_boundary"],
+                            (string)item["default_spatial_unit"]["eco_boundary"]);
                     }
                     break;
                 case SpatialUnitClassifierMode.SeperateAdminEcoClassifiers:
                     sitplugin.SetAdminEcoMapping(
-                        (string)mappingConfig["AdminClassifier"],
-                        (string)mappingConfig["EcoClassifier"]);
-                    IDictionary<string, JToken> adminValueMap = (JObject)mappingConfig["adminmapping"];
-                    foreach (var item in adminValueMap)
+                        (string)mappingConfig["admin_classifier"],
+                        (string)mappingConfig["eco_classifier"]);
+                    foreach (var item in mappingConfig["admin_mapping"])
                     {
-                        sitplugin.MapAdminBoundary(item.Key, item.Value.ToString());
+                        sitplugin.MapAdminBoundary(
+                            (string)item["user_admin_boundary"],
+                            (string)item["default_admin_boundary"]);
                     }
-                    IDictionary<string, JToken> ecoValueMap = (JObject)mappingConfig["ecomapping"];
-                    foreach (var item in ecoValueMap)
+                    foreach (var item in mappingConfig["eco_mapping"])
                     {
-                        sitplugin.MapEcoBoundary(item.Key, item.Value.ToString());
+                        sitplugin.MapEcoBoundary(
+                            (string)item["user_eco_boundary"],
+                            (string)item["default_eco_boundary"]);
                     }
                     break;
                 case SpatialUnitClassifierMode.SingleDefaultSpatialUnit:
-                    sitplugin.SetSingleSpatialUnit((int)mappingConfig["DefaultSPUID"]);
+                    sitplugin.SetSingleSpatialUnit((int)mappingConfig["default_spuid"]);
                     break;
             }
         }

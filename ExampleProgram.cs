@@ -12,8 +12,71 @@ namespace StandardImportToolPlugin
         {
             Method1();
             Method2();
+            Method3();
         }
 
+        /// <summary>
+        /// use a json configuration
+        /// </summary>
+        private static void Method3()
+        {
+            var config = new
+            {
+                import_config = new
+                {
+                    path = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Tutorials\Tutorial 6\Tutorial6.xls",
+                    ageclass_table_name = "AgeClasses$",
+                    classifiers_table_name = "Classifiers$",
+                    disturbance_events_table_name = "DistEvents$",
+                    disturbance_types_table_name = "DistType$",
+                    inventory_table_name = "Inventory$",
+                    transition_rules_table_name = "Transitions$",
+                    yield_table_name = "Growth$"
+                },
+                mapping_config = new
+                {
+                    spatial_units = new
+                    {
+                        mapping_mode = "SingleDefaultSpatialUnit",
+                        default_spuid = 42
+                    },
+                    disturbance_types = new
+                    {
+                        disturbance_type_mapping = new[] 
+                        {
+                            new { user_dist_type= "Fire", default_dist_type="Wildfire" },
+                            new { user_dist_type= "Firewood collection", default_dist_type="Firewood Collection - post logging" },
+                            new { user_dist_type= "Clearcut", default_dist_type="Clear-cut with slash-burn" },
+                            new { user_dist_type= "Afforestation", default_dist_type="Afforestation" },
+                            new { user_dist_type= "Hurricane", default_dist_type="Generic 50% mortality" },
+                        }
+                    },
+                    species = new
+                    {
+                        species_classifier = "Species",
+                        species_mapping = new[]
+                        {
+                            new { user_species = "Hispaniolan pine", default_species = "Pine" },
+                            new { user_species = "Nonforest", default_species = "Not stocked" },
+                            new { user_species = "Improved pine stock", default_species = "Pine" }
+                        }
+                    },
+                    nonforest = new
+                    {
+                        nonforest_classifier = "Forest type",
+                        nonforest_mapping = new[]
+                        {
+                            new { user_nonforest_type = "Afforestation", default_nonforest_type = "Gleysolic" },
+                            new { user_nonforest_type = "Natural forest", default_nonforest_type = Sitplugin.ForestOnly },
+                            new { user_nonforest_type = "Control", default_nonforest_type = Sitplugin.ForestOnly  }
+                        }
+                    }
+                }
+            };
+        }
+        //"Hispaniolan pine", "Pine");
+        //"Nonforest", "Not stocked");
+        //"Improved pine stock", "Pine");
         /// <summary>
         /// build up a dataset with code instead of import an SIT formatted dataset
         /// </summary>
@@ -105,7 +168,6 @@ namespace StandardImportToolPlugin
 
             sitplugin.SetSpeciesClassifier("Species");//the classifier name as defined in the spreadsheet
             sitplugin.SetNonForestClassifier("Forest type");
-
 
             // in the following mappings, the left value is something that appears in the import data,
             // and the right value is something that appears in the archive index database.
