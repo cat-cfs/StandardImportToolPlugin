@@ -76,6 +76,11 @@ namespace StandardImportToolPlugin
             this.aidbPath = archiveIndexPath;
             this.inputTemplatePath = inputDbTemplatePath;
             this.OutputPath = outputPath;
+            string dirname = System.IO.Path.GetDirectoryName(OutputPath);
+            if (!System.IO.Directory.Exists(dirname))
+            {
+                System.IO.Directory.CreateDirectory(dirname);
+            }
             aidb = new CBMDBObject(aidbPath);
             DefaultRows = FillDefaultRows(aidb);
 

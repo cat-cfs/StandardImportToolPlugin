@@ -14,7 +14,7 @@ namespace StandardImportToolPlugin
         {
 
             JObject obj = JObject.Parse(json);
-            string outputPath = (string)obj["outputpath"];
+            string outputPath = (string)obj["output_path"];
 
             var importConfig = obj["import_config"];
             var userData = Sitplugin.ParseSITData(
@@ -64,7 +64,7 @@ namespace StandardImportToolPlugin
             {
                 return;
             }
-            sitplugin.SetNonForestClassifier((string)mappingConfig["nonforestclassifier"]);
+            sitplugin.SetNonForestClassifier((string)mappingConfig["nonforest_classifier"]);
             foreach (var item in mappingConfig["nonforest_mapping"])
             {
                 sitplugin.MapNonForest((string)item["user_nonforest_type"], (string)item["default_nonforest_type"]);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,10 @@ namespace StandardImportToolPlugin
         /// </summary>
         private static void Method3()
         {
+            //creates a config object equivalent to Method1
             var config = new
             {
+                output_path = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Projects\tutorial6_json\tutorial6_json.mdb",
                 import_config = new
                 {
                     path = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Tutorials\Tutorial 6\Tutorial6.xls",
@@ -73,6 +76,11 @@ namespace StandardImportToolPlugin
                     }
                 }
             };
+            var jsonObject = JObject.FromObject(config);
+            string json = jsonObject.ToString(Newtonsoft.Json.Formatting.Indented);
+            JsonConfigLoader jsonConfigLoader = new JsonConfigLoader();
+            Sitplugin sitplugin = jsonConfigLoader.Load(json);
+            sitplugin.Import();
         }
         //"Hispaniolan pine", "Pine");
         //"Nonforest", "Not stocked");
@@ -142,11 +150,6 @@ namespace StandardImportToolPlugin
         {
             string excelPath = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Tutorials\Tutorial 6\Tutorial6.xls";
             string projectPath = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Projects\tutorial6\tutorial6.mdb";
-            string dirname = System.IO.Path.GetDirectoryName(projectPath);
-            if (!System.IO.Directory.Exists(dirname))
-            {
-                System.IO.Directory.CreateDirectory(dirname);
-            }
 
             var data = Sitplugin.ParseSITData(
                 path: excelPath,
