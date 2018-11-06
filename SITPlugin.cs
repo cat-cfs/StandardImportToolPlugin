@@ -56,8 +56,8 @@ namespace StandardImportToolPlugin
         MappingOptions mapping;
 
         private Dictionary<string, Classifier> Classifiers = new Dictionary<string, Classifier>();
-        private Dictionary<int, System.Collections.Generic.HashSet<string>> ClassifierValues =
-            new Dictionary<int, System.Collections.Generic.HashSet<string>>();
+        private Dictionary<int, HashSet<string>> ClassifierValues =
+            new Dictionary<int, HashSet<string>>();
 
         /// <summary>
         /// Create a new sitplugin
