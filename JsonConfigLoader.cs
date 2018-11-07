@@ -60,7 +60,7 @@ namespace StandardImportToolPlugin
 
         private static void MapNonForest(Sitplugin sitplugin, JToken mappingConfig)
         {
-            if(mappingConfig == null)
+            if(mappingConfig == null || !mappingConfig.HasValues)
             {
                 return;
             }
