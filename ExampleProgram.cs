@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿// Copyright (C) Her Majesty the Queen in Right of Canada,
+//  as represented by the Minister of Natural Resources Canada
+
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
