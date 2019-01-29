@@ -4,6 +4,12 @@ using System.IO;
 namespace StandardImportToolPlugin
 {
     public class CommandLineOptions {
+        [Option(
+            shortName: 'c',
+            longName: "config_path",
+            Required = false,
+            HelpText = "Path to a json formatted configuration file specifying SIT import configuration"
+            )]
         public string ConfigPath { get; set; }
     }
 
