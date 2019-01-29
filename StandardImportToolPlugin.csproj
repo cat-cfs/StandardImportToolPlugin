@@ -72,8 +72,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExampleProgram.cs" />
+    <Compile Include="ExampleMethods.cs" />
     <Compile Include="JsonConfigLoader.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SITPlugin.cs" />
   </ItemGroup>

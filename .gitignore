@@ -2,3 +2,5 @@
 .vs
 Debug/
 Packages/
+Release/
+*.user
