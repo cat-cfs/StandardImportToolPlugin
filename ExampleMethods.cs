@@ -10,14 +10,8 @@ using System.Threading.Tasks;
 
 namespace StandardImportToolPlugin
 {
-    class ExampleProgram
+    class ExampleMethods
     {
-        static void Main(string[] args)
-        {
-            Method1();
-            Method2();
-            Method3();
-        }
 
         /// <summary>
         /// use a json configuration
