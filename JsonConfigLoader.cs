@@ -20,16 +20,36 @@ namespace StandardImportToolPlugin
             string outputPath = (string)obj["output_path"];
 
             var importConfig = obj["import_config"];
-            var userData = Sitplugin.ParseSITData(
-                path: (string)importConfig["path"],
-                AgeClassTableName: (string)importConfig["ageclass_table_name"],
-                ClassifiersTableName: (string)importConfig["classifiers_table_name"],
-                DisturbanceEventsTableName: (string)importConfig["disturbance_events_table_name"],
-                DisturbanceTypesTableName: (string)importConfig["disturbance_types_table_name"],
-                InventoryTableName: (string)importConfig["inventory_table_name"],
-                TransitionRulesTableName: (string)importConfig["transition_rules_table_name"],
-                YieldTableName: (string)importConfig["yield_table_name"]
-                );
+            CBMSIT.UserData.UserDataSet userData = null;
+            if (importConfig["path"] != null)
+            {
+                userData = Sitplugin.ParseSITData(
+                    path: (string)importConfig["path"],
+                    AgeClassTableName: (string)importConfig["ageclass_table_name"],
+                    ClassifiersTableName: (string)importConfig["classifiers_table_name"],
+                    DisturbanceEventsTableName: (string)importConfig["disturbance_events_table_name"],
+                    DisturbanceTypesTableName: (string)importConfig["disturbance_types_table_name"],
+                    InventoryTableName: (string)importConfig["inventory_table_name"],
+                    TransitionRulesTableName: (string)importConfig["transition_rules_table_name"],
+                    YieldTableName: (string)importConfig["yield_table_name"]
+                    );
+            }
+            else if (importConfig["ageclass_path"] != null)
+            {
+                userData = Sitplugin.ParseSITDataText(
+                    ageClassPath: (string)importConfig["ageclass_path"],
+                    classifiersPath: (string)importConfig["classifiers_path"],
+                    disturbanceEventsPath: (string)importConfig["disturbance_events_path"],
+                    disturbanceTypesPath: (string)importConfig["disturbance_types_path"],
+                    inventoryPath: (string)importConfig["inventory_path"],
+                    transitionRulesPath: (string)importConfig["transition_rules_path"],
+                    yieldPath: (string)importConfig["yield_path"]);
+            }
+            else
+            {
+                throw new Exception("error in import_config section");
+            }
+
 
             Sitplugin sitplugin = new Sitplugin(outputPath, false, userData);
 

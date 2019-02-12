@@ -187,6 +187,37 @@ namespace StandardImportToolPlugin
             }
 
         }
+
+        public static UserDataSet ParseSITDataText(
+            string ageClassPath,
+            string classifiersPath,
+            string disturbanceEventsPath,
+            string disturbanceTypesPath,
+            string inventoryPath,
+            string transitionRulesPath,
+            string yieldPath)
+        {
+            try
+            {
+                log.Info("started importing SIT text");
+                UserDataSet data = new UserDataSet();
+                CBMSIT.TextImport.TextImporter importer = new CBMSIT.TextImport.TextImporter();
+                data.AgeClasses = importer.ParseAgeClasses(ageClassPath);
+                data.Classifiers = importer.ParseClassifiers(classifiersPath);
+                data.DisturbanceTypes = importer.ParseDisturbanceTypes(disturbanceTypesPath);
+                data.DisturbanceEvents = importer.ParseDisturbanceEvents(disturbanceEventsPath);
+
+                data.Inventories = importer.ParseInventory(inventoryPath);
+                data.TransitionRules = importer.ParseTransitionRules(transitionRulesPath);
+                data.Yields = importer.ParseYields(yieldPath);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                log.Error("error parsing sit text", ex);
+                throw ex;
+            }
+        }
         private void Validate()
         {
 

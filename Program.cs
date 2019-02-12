@@ -8,7 +8,7 @@ namespace StandardImportToolPlugin
             shortName: 'c',
             longName: "config_path",
             Required = true,
-            HelpText = "Path to a json formatted configuration file specifying SIT import configuration"
+            HelpText = "Path to a json formatted file specifying SIT import configuration"
             )]
         public string ConfigPath { get; set; }
     }

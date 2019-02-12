@@ -1,0 +1,80 @@
+{
+  "output_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Projects\\tutorial2_json\\tutorial2_json.mdb",
+  "import_config": {
+    "ageclass_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Tutorials\\Tutorial 2\\CBM Standard Input\\Sample Data\\Tutorial2_AgeClasses.txt",
+    "classifiers_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Tutorials\\Tutorial 2\\CBM Standard Input\\Sample Data\\Tutorial2_ClassifiersAndValues.txt",
+    "disturbance_events_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Tutorials\\Tutorial 2\\CBM Standard Input\\Sample Data\\Tutorial2_DistEvents.txt",
+    "disturbance_types_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Tutorials\\Tutorial 2\\CBM Standard Input\\Sample Data\\Tutorial2_DistTypes.txt",
+    "inventory_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Tutorials\\Tutorial 2\\CBM Standard Input\\Sample Data\\Tutorial2_Inventory.txt",
+    "transition_rules_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Tutorials\\Tutorial 2\\CBM Standard Input\\Sample Data\\Tutorial2_TransitionRules.txt",
+    "yield_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Tutorials\\Tutorial 2\\CBM Standard Input\\Sample Data\\Tutorial2_GrowthAndYields.txt"
+  },
+  "mapping_config": {
+    "spatial_units": {
+      "mapping_mode": "SingleDefaultSpatialUnit",
+      "default_spuid": 42
+    },
+    "disturbance_types": {
+      "disturbance_type_mapping": [
+        {
+          "user_dist_type": "Natural forest fire",
+          "default_dist_type": "Wildfire"
+        },
+        {
+          "user_dist_type": "Senescence",
+          "default_dist_type": "Natural succession"
+        },
+        {
+          "user_dist_type": "Mountain pine beetle infestation",
+          "default_dist_type": "Insect disturbance"
+        },
+        {
+          "user_dist_type": "ClearCut Harvesting",
+          "default_dist_type": "Clear-cut with slash-burn"
+        }
+      ]
+    },
+    "species": {
+      "species_classifier": "Working Species Or Leading Species",
+      "species_mapping": [
+        {
+          "user_species": "Balsam Fir",
+          "default_species": "Balsam fir"
+        },
+        {
+          "user_species": "Black Spruce",
+          "default_species": "Black spruce"
+        },
+        {
+          "user_species": "Western Larch",
+          "default_species": "Western larch"
+        },
+        {
+          "user_species": "Jack Pine",
+          "default_species": "Jack pine"
+        },
+        {
+          "user_species": "Other Spruce",
+          "default_species": "Other spruce"
+        },
+        {
+          "user_species": "Red Pine",
+          "default_species": "Red pine"
+        },
+        {
+          "user_species": "Unspecified Softwood",
+          "default_species": "Unspecified softwood species"
+        },
+        {
+          "user_species": "Larch",
+          "default_species": "Larch - Genus type"
+        },
+        {
+          "user_species": "White Spruce",
+          "default_species": "White spruce"
+        }
+      ]
+    },
+    "nonforest": null
+  }
+}
