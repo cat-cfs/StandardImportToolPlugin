@@ -302,6 +302,17 @@ namespace StandardImportToolPlugin
                         mapping.SpeciesOptions.SpeciesTypeMappings[s]));
                 }
             }
+            foreach(var y in data.Yields)
+            {
+                if(y.YieldCurve.Count != data.AgeClasses.Count)
+                {
+                    throw new Exception(
+                        string.Format("yield curve with classifier set '{0}' has incorrect number of yield values. Expected: {1} got: {2}",
+                            string.Join(",", y.Classifiers.OrderBy(a => a.Key).Select(a => a.Value)),
+                            data.AgeClasses.Count,
+                            y.YieldCurve.Count));
+                }
+            }
         }
         /// <summary>
         /// Import the data that is bound to this instance
