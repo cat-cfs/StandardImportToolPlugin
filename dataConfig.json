@@ -1,5 +1,5 @@
 {
-  "output_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Projects\\tutorial2_json\\tutorial2_json.mdb",
+  "output_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Projects\\sit_plugin_data_config_example\\sit_plugin_data_config_example.mdb",
   "data": {
     "age_class":{"age_class_size":10, "num_age_classes":10},
     "classifiers": ["admin", "eco", "species", "group"],
@@ -8,6 +8,19 @@
             "classifier_set": ["British Columbia", "Pacific Maritime", "Spruce", "?"],
             "disturbance_type": "Wildfire",
             "time_step": 100,
+            "target": 10,
+            "target_type": "Area",
+            "sort": "SORT_BY_SW_AGE",
+            "spatial_reference": -1,
+            "age_min": -1,
+            "age_max": -1,
+            "efficiency": 1.0,
+            "eligibility": null
+        },
+        {
+            "classifier_set": ["British Columbia", "Pacific Maritime", "?", "?"],
+            "disturbance_type": "Wildfire",
+            "time_step": 200,
             "target": 10,
             "target_type": "Area",
             "sort": "SORT_BY_SW_AGE",
