@@ -60,21 +60,36 @@ namespace StandardImportToolPlugin
                     throw new Exception("error in import_config section");
                 }
                 sitplugin = new Sitplugin(outputPath, initialize_mapping, userData);
+                MapSpatialUnits(sitplugin, mappingConfig["spatial_units"]);
+                MapSpecies(sitplugin, mappingConfig["species"]);
+                MapNonForest(sitplugin, mappingConfig["nonforest"]);
+                MapDisturbanceTypes(sitplugin, mappingConfig["disturbance_types"]);
             }
             else if(obj["data"] != null)
             {
                 sitplugin = new Sitplugin(outputPath, initialize_mapping);
+                sitplugin.AddAgeClasses(
+                    (int)obj["data"]["age_class"]["age_class_size"],
+                    (int)obj["data"]["age_class"]["num_age_classes"]);
+
+                foreach (var c in obj["data"]["classifiers"])
+                {
+                    sitplugin.AddClassifier((string)c);
+                }
+                MapSpatialUnits(sitplugin, mappingConfig["spatial_units"]);
+                MapSpecies(sitplugin, mappingConfig["species"]);
+                MapNonForest(sitplugin, mappingConfig["nonforest"]);
+                MapDisturbanceTypes(sitplugin, mappingConfig["disturbance_types"]);
+
                 LoadConfigDataObjects(sitplugin, obj["data"]);
+
             }
             else
             {
                 throw new Exception("expected one of 'import_config', or 'data' in configuration");
             }
 
-            MapSpatialUnits(sitplugin, mappingConfig["spatial_units"]);
-            MapSpecies(sitplugin, mappingConfig["species"]);
-            MapNonForest(sitplugin, mappingConfig["nonforest"]);
-            MapDisturbanceTypes(sitplugin, mappingConfig["disturbance_types"]);
+
 
             return sitplugin;
         }
@@ -84,13 +99,7 @@ namespace StandardImportToolPlugin
         }
         private static void LoadConfigDataObjects(Sitplugin plugin, JToken dataConfig)
         {
-            plugin.AddAgeClasses(
-                (int)dataConfig["age_class"]["age_class_size"],
-                (int)dataConfig["age_class"]["num_age_classes"]);
 
-            foreach (var c in dataConfig["classifiers"]) {
-                plugin.AddClassifier((string)c);
-            }
 
             var parseClassifierSet = new Func<JToken, string>((t) =>
             {
@@ -154,21 +163,31 @@ namespace StandardImportToolPlugin
         }
         private static void MapDisturbanceTypes(Sitplugin sitplugin, JToken mappingConfig)
         {
-            foreach (var item in mappingConfig["disturbance_type_mapping"])
+            if (mappingConfig != null && mappingConfig.HasValues)
             {
-                sitplugin.MapDisturbanceType(
-                    (string)item["user_dist_type"],
-                    (string)item["default_dist_type"]);
+                if (mappingConfig["disturbance_type_mapping"] != null)
+                {
+                    foreach (var item in mappingConfig["disturbance_type_mapping"])
+                    {
+                        sitplugin.MapDisturbanceType(
+                            (string)item["user_dist_type"],
+                            (string)item["default_dist_type"]);
+                    }
+                }
             }
         }
 
         private static void MapSpecies(Sitplugin sitplugin, JToken mappingConfig)
         {
             sitplugin.SetSpeciesClassifier((string)mappingConfig["species_classifier"]);
-            foreach (var item in mappingConfig["species_mapping"]) {
-                sitplugin.MapSpecies(
-                    (string)item["user_species"],
-                    (string)item["default_species"]);
+            if (mappingConfig["species_mapping"] != null)
+            {
+                foreach (var item in mappingConfig["species_mapping"])
+                {
+                    sitplugin.MapSpecies(
+                        (string)item["user_species"],
+                        (string)item["default_species"]);
+                }
             }
         }
 
@@ -206,17 +225,23 @@ namespace StandardImportToolPlugin
                     sitplugin.SetAdminEcoMapping(
                         (string)mappingConfig["admin_classifier"],
                         (string)mappingConfig["eco_classifier"]);
-                    foreach (var item in mappingConfig["admin_mapping"])
+                    if (mappingConfig["admin_mapping"] != null)
                     {
-                        sitplugin.MapAdminBoundary(
-                            (string)item["user_admin_boundary"],
-                            (string)item["default_admin_boundary"]);
+                        foreach (var item in mappingConfig["admin_mapping"])
+                        {
+                            sitplugin.MapAdminBoundary(
+                                (string)item["user_admin_boundary"],
+                                (string)item["default_admin_boundary"]);
+                        }
                     }
-                    foreach (var item in mappingConfig["eco_mapping"])
+                    if (mappingConfig["eco_mapping"] != null)
                     {
-                        sitplugin.MapEcoBoundary(
-                            (string)item["user_eco_boundary"],
-                            (string)item["default_eco_boundary"]);
+                        foreach (var item in mappingConfig["eco_mapping"])
+                        {
+                            sitplugin.MapEcoBoundary(
+                                (string)item["user_eco_boundary"],
+                                (string)item["default_eco_boundary"]);
+                        }
                     }
                     break;
                 case SpatialUnitClassifierMode.SingleDefaultSpatialUnit:

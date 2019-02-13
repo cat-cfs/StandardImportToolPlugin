@@ -1,7 +1,7 @@
 {
   "output_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Projects\\tutorial2_json\\tutorial2_json.mdb",
   "data": {
-    "ageclass":{"age_class_size":10, "num_age_classes":10},
+    "age_class":{"age_class_size":10, "num_age_classes":10},
     "classifiers": ["admin", "eco", "species", "group"],
     "disturbance_events": [
         {
@@ -9,9 +9,9 @@
             "disturbance_type": "Wildfire",
             "time_step": 100,
             "target": 10,
-            "target_type" = "Area",
-            "sort" = "SORT_BY_SW_AGE",
-            "spatial_reference" = -1,
+            "target_type": "Area",
+            "sort": "SORT_BY_SW_AGE",
+            "spatial_reference": -1,
             "age_min": -1,
             "age_max": -1,
             "efficiency": 1.0,
@@ -34,7 +34,7 @@
         {
             "classifier_set_source": ["?", "?", "Spruce", "g1"],
             "classifier_set_target": ["?", "?", "Red alder", "g2"],
-            "disturbance_type": "WildFire",
+            "disturbance_type": "Wildfire",
             "percent": 100,
             "spatial_reference": -1,
             "age_min": -1,
@@ -47,12 +47,12 @@
         {
             "classifier_set": ["British Columbia", "Pacific Maritime", "Spruce", "g1"],
             "leading_species_classifier_value": "Spruce",
-            "values": [0, 5, 10, 20, 38, 72, 120, 200, 250, 270, 290]
+            "values": [0, 5, 10, 20, 38, 72, 120, 200, 250, 270]
         },
         {
             "classifier_set": ["British Columbia", "Pacific Maritime", "Red alder", "g2"],
             "leading_species_classifier_value": "Red alder",
-            "values": [0, 5, 10, 20, 38, 72, 120, 200, 250, 270, 290]
+            "values": [0, 5, 10, 20, 38, 72, 120, 200, 250, 270]
         }
     ]
   },
@@ -63,14 +63,7 @@
       "admin_classifier": "admin",
       "eco_classifier": "eco"
     },
-    "disturbance_types": {
-      "disturbance_type_mapping": [
-        {
-          "user_dist_type": "Wildfire",
-          "default_dist_type": "Wildfire"
-        }
-      ]
-    },
+    "disturbance_types": null,
     "species": {
       "species_classifier": "species",
     },
