@@ -18,6 +18,11 @@ namespace StandardImportToolPlugin
             Sitplugin sitplugin = null;
             JObject obj = JObject.Parse(json);
             string outputPath = (string)obj["output_path"];
+            string archive_index_db_path = null;
+            if (obj["archive_index_db_path"] != null)
+            {
+                archive_index_db_path = (string)obj["archive_index_db_path"];
+            }
             var mappingConfig = obj["mapping_config"];
             if(mappingConfig == null)
             {
@@ -59,7 +64,8 @@ namespace StandardImportToolPlugin
                 {
                     throw new Exception("error in import_config section");
                 }
-                sitplugin = new Sitplugin(outputPath, initialize_mapping, userData);
+                sitplugin = new Sitplugin(outputPath, initialize_mapping, userData,
+                    archive_index_database_path: archive_index_db_path);
                 MapSpatialUnits(sitplugin, mappingConfig["spatial_units"]);
                 MapSpecies(sitplugin, mappingConfig["species"]);
                 MapNonForest(sitplugin, mappingConfig["nonforest"]);
@@ -67,7 +73,8 @@ namespace StandardImportToolPlugin
             }
             else if(obj["data"] != null)
             {
-                sitplugin = new Sitplugin(outputPath, initialize_mapping);
+                sitplugin = new Sitplugin(outputPath, initialize_mapping, 
+                    archive_index_database_path: archive_index_db_path);
                 sitplugin.AddAgeClasses(
                     (int)obj["data"]["age_class"]["age_class_size"],
                     (int)obj["data"]["age_class"]["num_age_classes"]);

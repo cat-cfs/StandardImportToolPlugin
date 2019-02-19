@@ -123,9 +123,11 @@ namespace StandardImportToolPlugin
         /// <param name="initializeMapping">if true, initializes all default 
         /// mapped names, otherwise all mapping must be user specified</param>
         /// <param name="dataset">An SIT dataset</param>
+        /// <param name="archive_index_database_path">optional path to an archive index database, if unspecified, a default value is used</param>
         public Sitplugin(string outputPath, bool initializeMapping = true,
-            UserDataSet dataset = null)
-            : this(DefaultArchiveIndexPath, DefaultInputDBTemplatePath,
+            UserDataSet dataset = null, string archive_index_database_path =null)
+            : this(archive_index_database_path == null ? DefaultArchiveIndexPath : archive_index_database_path,
+                  DefaultInputDBTemplatePath,
             outputPath, initializeMapping, dataset)
         {
 
