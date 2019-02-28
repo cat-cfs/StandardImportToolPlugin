@@ -30,7 +30,16 @@ namespace StandardImportToolPlugin
                 string json = ReadFile(a.ConfigPath);
                 JsonConfigLoader jsonConfigLoader = new JsonConfigLoader();
                 Sitplugin sitplugin = jsonConfigLoader.Load(json);
-                sitplugin.Import();
+                try
+                {
+                    sitplugin.Import();
+                }
+                catch(CBMSIT.ProjectCreation.ProjectCreationException ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                    throw ex;
+                }
+                
             });
         }
     }
