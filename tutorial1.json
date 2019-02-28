@@ -1,0 +1,220 @@
+{
+    "output_path": ".\\tutorial1\\tutorial1.mdb",
+    "data": {
+        "age_class": {
+            "age_class_size": 5,
+            "num_age_classes": 14
+        },
+        "classifiers": [
+            "Stand ID",
+            "Leading Species",
+            "Land Cover"
+        ],
+        "disturbance_events": [
+            {
+                "classifier_set": [
+                    "?",
+                    "?",
+                    "?"
+                ],
+                "disturbance_type": "Afforestation",
+                "time_step": 1,
+                "target": 30,
+                "target_type": "Area",
+                "sort": "SORT_BY_SW_AGE"
+            },
+            {
+                "classifier_set": [
+                    "?",
+                    "?",
+                    "?"
+                ],
+                "disturbance_type": "Clear-cut with slash-burn",
+                "time_step": 100,
+                "target": 30,
+                "target_type": "Area",
+                "sort": "SORT_BY_SW_AGE"
+            },
+            {
+                "classifier_set": [
+                    "?",
+                    "?",
+                    "?"
+                ],
+                "disturbance_type": "Wildfire",
+                "time_step": 150,
+                "target": 30,
+                "target_type": "Area",
+                "sort": "SORT_BY_SW_AGE"
+            }
+        ],
+        "transition_rules": [
+            {
+                "classifier_set_source": [
+                    "?",
+                    "?",
+                    "?"
+                ],
+                "classifier_set_target": [
+                    "?",
+                    "Red pine",
+                    "Forest Only"
+                ],
+                "disturbance_type": "Afforestation",
+                "percent": 100
+            },
+            {
+                "classifier_set_source": [
+                    "?",
+                    "?",
+                    "?"
+                ],
+                "classifier_set_target": [
+                    "?",
+                    "Red pine",
+                    "Forest Only"
+                ],
+                "disturbance_type": "Clear-cut with slash-burn",
+                "percent": 100
+            },
+            {
+                "classifier_set_source": [
+                    "?",
+                    "?",
+                    "?"
+                ],
+                "classifier_set_target": [
+                    "?",
+                    "Red pine",
+                    "Forest Only"
+                ],
+                "disturbance_type": "Wildfire",
+                "percent": 100
+            }
+        ],
+        "inventory": [
+            {
+                "classifier_set": [
+                    "Stand 1",
+                    "Nonforest",
+                    "Luvisolic (E. Canada)"
+                ],
+                "area": 10,
+                "age": 0,
+                "unfcccLandClass": 1
+            },
+            {
+                "classifier_set": [
+                    "Stand 2",
+                    "Nonforest",
+                    "Brunisolic"
+                ],
+                "area": 10,
+                "age": 0,
+                "unfcccLandClass": 1
+            },
+            {
+                "classifier_set": [
+                    "Stand 3",
+                    "Nonforest",
+                    "Average"
+                ],
+                "area": 10,
+                "age": 0,
+                "unfcccLandClass": 1
+            }
+        ],
+        "yield": [
+            {
+                "classifier_set": [
+                    "Stand 1",
+                    "Red pine",
+                    "Forest Only"
+                ],
+                "leading_species_classifier_value": "Red pine",
+                "values": [
+                    0,
+                    0,
+                    0,
+                    27,
+                    84,
+                    155,
+                    217,
+                    271,
+                    317,
+                    353,
+                    382,
+                    406,
+                    426,
+                    426
+                ]
+            },
+            {
+                "classifier_set": [
+                    "Stand 2",
+                    "Red pine",
+                    "Forest Only"
+                ],
+                "leading_species_classifier_value": "Red pine",
+                "values": [
+                    0,
+                    0,
+                    0,
+                    27,
+                    84,
+                    155,
+                    217,
+                    271,
+                    317,
+                    353,
+                    382,
+                    406,
+                    426,
+                    426
+                ]
+            },
+            {
+                "classifier_set": [
+                    "Stand 3",
+                    "Red pine",
+                    "Forest Only"
+                ],
+                "leading_species_classifier_value": "Red pine",
+                "values": [
+                    0,
+                    0,
+                    0,
+                    27,
+                    84,
+                    155,
+                    217,
+                    271,
+                    317,
+                    353,
+                    382,
+                    406,
+                    426,
+                    426
+                ]
+            }
+        ]
+    },
+    "mapping_config": {
+        "initialize_mapping": true,
+        "spatial_units": {
+            "mapping_mode": "SingleDefaultSpatialUnit",
+            "default_spuid": 42
+        },
+        "disturbance_types": null,
+        "species": {
+            "species_classifier": "Leading Species",
+            "species_mapping": [
+                {
+                    "user_species": "Nonforest",
+                    "default_species": "Not stocked"
+                }
+            ]
+        },
+        "nonforest": null
+    }
+}
