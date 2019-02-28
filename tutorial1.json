@@ -203,7 +203,7 @@
         "initialize_mapping": true,
         "spatial_units": {
             "mapping_mode": "SingleDefaultSpatialUnit",
-            "default_spuid": 42
+            "default_spuid": 17
         },
         "disturbance_types": null,
         "species": {
