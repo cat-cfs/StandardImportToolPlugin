@@ -101,7 +101,7 @@
                 ],
                 "area": 10,
                 "age": 0,
-                "unfcccLandClass": 1
+                "unfccc_land_class": 1
             },
             {
                 "classifier_set": [
@@ -111,7 +111,7 @@
                 ],
                 "area": 10,
                 "age": 0,
-                "unfcccLandClass": 1
+                "unfccc_land_class": 1
             },
             {
                 "classifier_set": [
@@ -121,7 +121,7 @@
                 ],
                 "area": 10,
                 "age": 0,
-                "unfcccLandClass": 1
+                "unfccc_land_class": 1
             }
         ],
         "yield": [
