@@ -283,11 +283,6 @@ namespace StandardImportToolPlugin
 
             }
 
-
-            //yield exists
-            //inventory | initialized inventory exists
-            //age classes exist
-
             foreach (string s in mapping.SpeciesOptions.SpeciesClassifier.ClassifierValues.Select(a => a.Description))
             {
                 if (!mapping.SpeciesOptions.SpeciesTypeMappings.ContainsKey(s))
@@ -788,6 +783,17 @@ namespace StandardImportToolPlugin
             }
             mapping.SpatialUnitOptions.SingleDefaultSpatialUnit = row.First();
         }
+
+        private Classifier GetClassifierValidated(string topic, string classifierName)
+        {
+            if (!Classifiers.TryGetValue(classifierName, out Classifier classifier))
+            {
+                throw new ArgumentException(string.Format(
+                    "the specified {0} classifier name: '{1}' was not found in the list of defined classifiers: '{2}'",
+                    topic, classifierName, string.Join(", ", Classifiers.Keys.ToList())));
+            }
+            return classifier;
+        }
         /// <summary>
         /// Used for cases where your data has a classifier which can be mapped to administrative boundaries,
         /// and a classifier which can be mapped to ecological boundaries
@@ -796,7 +802,9 @@ namespace StandardImportToolPlugin
         /// <param name="ecoClassifier">The name of the classifier which corresponds to ecological boundary</param>
         public void SetAdminEcoMapping(string adminClassifier, string ecoClassifier)
         {
-            SetAdminEcoMapping(Classifiers[adminClassifier], Classifiers[ecoClassifier]);
+            SetAdminEcoMapping(
+                GetClassifierValidated("admin boundary", adminClassifier),
+                GetClassifierValidated("eco boundary", ecoClassifier));
         }
         private void SetAdminEcoMapping(Classifier Admin, Classifier Eco)
         {
@@ -810,7 +818,7 @@ namespace StandardImportToolPlugin
         /// <param name="spuClassifier">The name of the classifier which corresponds to spatial units</param>
         public void SetSPUMapping(string spuClassifier)
         {
-            SetSPUMapping(Classifiers[spuClassifier]);
+            SetSPUMapping(GetClassifierValidated("spatial unit", spuClassifier));
         }
         private void SetSPUMapping(Classifier SPU)
         {
@@ -823,7 +831,7 @@ namespace StandardImportToolPlugin
         /// <param name="nonForestClassifier">the non-forest classifier name</param>
         public void SetNonForestClassifier(string nonForestClassifier)
         {
-            SetNonForestClassifier(Classifiers[nonForestClassifier]);
+            SetNonForestClassifier(GetClassifierValidated("non forest", nonForestClassifier));
         }
         private void SetNonForestClassifier(Classifier nonforestClassifier)
         {
