@@ -232,7 +232,7 @@ namespace StandardImportToolPlugin
                     throw new ArgumentException(String.Format("ecoboundary {0} is not mapped to archive index", missingEco.First()));
                 }
 
-                foreach (string cval in mapping.SpatialUnitOptions.EcoClassifier.ClassifierValues.Select(a => a.Name))
+                foreach (string cval in mapping.SpatialUnitOptions.EcoClassifier.ClassifierValues.Select(a => a.Description))
                 {
                     string mapped = mapping.SpatialUnitOptions.EcoClassifierMapping[cval];
                     if (!DefaultRows.DefaultEcoBoundaryRowsByName.ContainsKey(mapped))
@@ -248,7 +248,7 @@ namespace StandardImportToolPlugin
                 {
                     throw new ArgumentException(String.Format("admin boundary named {0} is not mapped to archive index", missingadmin.First()));
                 }
-                foreach (string cval in mapping.SpatialUnitOptions.AdminClassifier.ClassifierValues.Select(a => a.Name))
+                foreach (string cval in mapping.SpatialUnitOptions.AdminClassifier.ClassifierValues.Select(a => a.Description))
                 {
                     string mapped = mapping.SpatialUnitOptions.AdminClassifierMapping[cval];
                     if (!DefaultRows.DefaultAdminBoundaryRowsByName.ContainsKey(mapped))
@@ -265,7 +265,7 @@ namespace StandardImportToolPlugin
                 {
                     throw new ArgumentException(String.Format("spu {0} is not mapped to archive index", missingSPU.First()));
                 }
-                foreach (string cval in mapping.SpatialUnitOptions.SPUClassifier.ClassifierValues.Select(a => a.Name))
+                foreach (string cval in mapping.SpatialUnitOptions.SPUClassifier.ClassifierValues.Select(a => a.Description))
                 {
                     string mapped = mapping.SpatialUnitOptions.SPUClassifierMapping[cval];
                     if (!DefaultRows.DefaultSPUsByName.ContainsKey(mapped))
