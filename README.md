@@ -18,13 +18,21 @@ here:
 tutorial6.xls which is referenced in example code is found by default in this directory:
 `C:\Program Files (x86)\Operational-Scale CBM-CFS3\Tutorials\Tutorial 6`
 
-## command line usage
+## Command line usage
 
-A quick example for importing the included [tutorial6.json](https://github.com/cat-cfs/StandardImportToolPlugin/blob/master/tutorial6.json) configuration file.  The output path, as specified in the config file itself will be created as a valid CBM-CFS3 project
+A quick example for importing the included [tutorial6.json](https://github.com/cat-cfs/StandardImportToolPlugin/blob/master/Examples/tutorial6.json) configuration file.  The output path, as specified in the config file itself will be created as a valid CBM-CFS3 project
 
 `StandardImportToolPlugin.exe -c "tutorial6.json"`
 
-## other uses
+## Command line Examples
+The directory [Examples](https://github.com/cat-cfs/StandardImportToolPlugin/tree/master/Examples) contains a few command line examples.
+  * dataConfig.json - shows an SIT import using json objects to define CBM inventory, yield, events, and transition rules
+  * excel_import_example.json/excel_import_example.xls - shows a mapped import of CBM data in SIT form in an excel spreadsheet.
+  * tutorial1.json - replicates the CBM-CFS3 tutorial1 afforestation project by importing CBM3 data as json objects
+  * tutorial2.json - maps and imports a text formatted SIT input dataset.  This replicates the CBM-CFS3 tutorial2 project
+  * tutorial6.json - imports the SIT tutorial6 project 
+
+## Other uses
 
 The file [ExampleMethods.cs](https://github.com/cat-cfs/StandardImportToolPlugin/blob/master/ExampleMethods.cs) has 3 usage examples for importing SIT file directly in C# code
 
