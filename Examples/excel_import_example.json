@@ -1,0 +1,143 @@
+{
+  "output_path": ".\\excel_import_example.mdb",
+  "import_config": {
+    "path":                          "C:\\dev\\StandardImportToolPlugin\\examples\\excel_import_example.xls",
+    "ageclass_table_name":           "SIT_AgeClasses$",
+    "classifiers_table_name":        "SIT_Classifiers$",
+    "disturbance_events_table_name": "SIT_Events$",
+    "disturbance_types_table_name":  "SIT_DisturbanceTypes$",
+    "inventory_table_name":          "SIT_Inventory$",
+    "transition_rules_table_name":   "SIT_Transitions$",
+    "yield_table_name":              "SIT_Yield$"
+  },
+  "mapping_config": {
+    "spatial_units": {
+      "mapping_mode":     "SeperateAdminEcoClassifiers",
+      "admin_classifier": "Admin",
+      "eco_classifier":   "Eco",
+      "admin_mapping":
+          [
+            {"user_admin_boundary": "Arrow", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Boundary", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Bulkley", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Cassiar", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Cranbrook", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Golden", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Fort Nelson", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Invermere", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Kalum", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Kamloops", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Kispiox", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Kootenay Lake", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Lakes", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Lillooet", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Mackenzie", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Robson Valley", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Merritt", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Mid Cost", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Morice", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "North Coast", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Okanagan", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "100 Mile House", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Prince George", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Queen Charlotte", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Quesnel", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Revelstoke", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Williams Lake", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Fraser", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Soo", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Kingcome", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Strathcona", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Arrrowsmith", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Sunshine Coast", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Fort St. John", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Dawson Creek", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Cranberry", "default_admin_boundary": "British Columbia"},
+            {"user_admin_boundary": "Nass", "default_admin_boundary": "British Columbia"}
+      ]
+      ,
+      "eco_mapping":
+          [
+        {"default_eco_boundary": "Taiga Plains", "user_eco_boundary": "Taiga Plains"},
+        {"default_eco_boundary": "Boreal Plains", "user_eco_boundary": "Boreal Plains"},
+        {"default_eco_boundary": "Boreal Cordillera", "user_eco_boundary": "Boreal Cordillera"},
+        {"default_eco_boundary": "Pacific Maritime", "user_eco_boundary": "Pacific Maritime"},
+        {"default_eco_boundary": "Montane Cordillera", "user_eco_boundary": "Montane Cordillera"}
+      ]
+    }
+    ,
+    "disturbance_types": {
+      "disturbance_type_mapping":
+        [
+        {
+          "user_dist_type": "Wild Fire",
+          "default_dist_type": "Wildfire"
+        },
+        {
+          "user_dist_type": "Clearcut with slash-burn",
+          "default_dist_type": "Clear-cut with slash-burn"
+        },
+        {
+          "user_dist_type": "MPB 5% death",
+          "default_dist_type": "Mountain pine beetle — Low impact"
+        },
+        {
+          "user_dist_type": "MPB 10% death",
+          "default_dist_type": "Mountain pine beetle — Moderate impact"
+        },
+        {
+          "user_dist_type": "MPB 50% death",
+          "default_dist_type": "Mountain pine beetle — Very severe impact"
+        },
+        {
+          "user_dist_type": "MPB 30% death",
+          "default_dist_type": "Mountain pine beetle — Severe impact"
+        },
+      ]
+    },
+    "species": {
+      "species_classifier": "Leading Species",
+      "species_mapping":
+        [
+        {"user_species": "Alder", "default_species": "Alder"},
+        {"user_species": "Amabilis fir", "default_species": "Amabilis fir"},
+        {"user_species": "Arbutus", "default_species": "Arbutus"},
+        {"user_species": "Balsam fir", "default_species": "Balsam fir"},
+        {"user_species": "Balsam poplar & black cottonwood", "default_species": "Balsam poplar and black cottonwood"},
+        {"user_species": "Bigleaf maple", "default_species": "Bigleaf maple"},
+        {"user_species": "Birch", "default_species": "Birch"},
+        {"user_species": "Black spruce", "default_species": "Black spruce"},
+        {"user_species": "Cedar", "default_species": "Cedar"},
+        {"user_species": "Cypress", "default_species": "Cypress"},
+        {"user_species": "Douglas-fir", "default_species": "Douglas-fir and Rocky Mountain Douglas-fir"},
+        {"user_species": "Engelmann spruce", "default_species": "Engelmann spruce"},
+        {"user_species": "Garry oak", "default_species": "Garry oak"},
+        {"user_species": "Grand fir", "default_species": "Grand fir"},
+        {"user_species": "Hemlock", "default_species": "Hemlock"},
+        {"user_species": "Larch- Genus Type", "default_species": "Larch - Genus type"},
+        {"user_species": "Lodgepole pine", "default_species": "Lodgepole pine"},
+        {"user_species": "Mountain hemlock", "default_species": "Mountain hemlock"},
+        {"user_species": "Mountain paper birch", "default_species": "Mountain paper birch"},
+        {"user_species": "Moutain hemlock", "default_species": "Mountain hemlock"},
+        {"user_species": "Other softwoods", "default_species": "Other softwoods"},
+        {"user_species": "Ponderosa pine", "default_species": "Ponderosa pine"},
+        {"user_species": "Poplar- Genus Type", "default_species": "Poplar- Genus type"},
+        {"user_species": "Red alder", "default_species": "Red alder"},
+        {"user_species": "Sitka spruce", "default_species": "Sitka spruce"},
+        {"user_species": "Spruce", "default_species": "Spruce"},
+        {"user_species": "Spruce- Genus Type", "default_species": "Spruce - Genus type"},
+        {"user_species": "Subalpine fir", "default_species": "Subalpine fir (or alpine fir)"},
+        {"user_species": "Tamarack", "default_species": "Tamarack"},
+        {"user_species": "Trembling aspen", "default_species": "Trembling aspen"},
+        {"user_species": "Unspecified conifirs", "default_species": "Unspecified conifers - Genus type"},
+        {"user_species": "Unspecified hardwood", "default_species": "Unspecified hardwood species"},
+        {"user_species": "Western hemlock", "default_species": "Western hemlock"},
+        {"user_species": "Western larch", "default_species": "Western larch"},
+        {"user_species": "Western red-cedar", "default_species": "Western redcedar"},
+        {"user_species": "Western white pine", "default_species": "Western white pine"},
+        {"user_species": "White spruce", "default_species": "White spruce"},
+        {"user_species": "Whitebark pine", "default_species": "Whitebark pine"}
+      ]
+    }
+  }
+}

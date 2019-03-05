@@ -1,5 +1,5 @@
 {
-  "output_path": "C:\\Program Files (x86)\\Operational-Scale CBM-CFS3\\Projects\\sit_plugin_data_config_example\\sit_plugin_data_config_example.mdb",
+  "output_path": "excel_import_example.mdb",
   "data": {
     "age_class":{"age_class_size":10, "num_age_classes":10},
     "classifiers": ["admin", "eco", "species", "group"],
