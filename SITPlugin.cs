@@ -220,9 +220,18 @@ namespace StandardImportToolPlugin
                 throw ex;
             }
         }
-        private void Validate()
+        private static void Validate(UserDataSet userdata, MappingOptions mapping, DefaultRows defaultRows)
         {
-
+            CBMSIT.Mapping.MappingValidator validator = new MappingValidator(userdata, mapping);
+            string validationErrors = "";
+            validationErrors += validator.ValidateDisturbanceTypeMapping();
+            validationErrors += validator.ValidateNonForestTypeMapping();
+            validationErrors += validator.ValidateSpeciesMapping();
+            validationErrors += validator.ValidateDisturbanceTypeMapping();
+            if (validationErrors.Length > 0)
+            {
+                throw new ArgumentException(validationErrors);
+            }
             if (mapping.SpatialUnitOptions.ClassifierMode == SpatialUnitClassifierMode.SeperateAdminEcoClassifiers)
             {
                 var missingEco = mapping.SpatialUnitOptions.EcoClassifier.ClassifierValues.Select(a => a.Description).Except(
@@ -235,7 +244,7 @@ namespace StandardImportToolPlugin
                 foreach (string cval in mapping.SpatialUnitOptions.EcoClassifier.ClassifierValues.Select(a => a.Description))
                 {
                     string mapped = mapping.SpatialUnitOptions.EcoClassifierMapping[cval];
-                    if (!DefaultRows.DefaultEcoBoundaryRowsByName.ContainsKey(mapped))
+                    if (!defaultRows.DefaultEcoBoundaryRowsByName.ContainsKey(mapped))
                     {
                         throw new Exception(String.Format("cannot find eco boundary {0} in the archive index", mapped));
                     }
@@ -251,7 +260,7 @@ namespace StandardImportToolPlugin
                 foreach (string cval in mapping.SpatialUnitOptions.AdminClassifier.ClassifierValues.Select(a => a.Description))
                 {
                     string mapped = mapping.SpatialUnitOptions.AdminClassifierMapping[cval];
-                    if (!DefaultRows.DefaultAdminBoundaryRowsByName.ContainsKey(mapped))
+                    if (!defaultRows.DefaultAdminBoundaryRowsByName.ContainsKey(mapped))
                     {
                         throw new Exception(String.Format("cannot find admin boundary {0} in the archive index", mapped));
                     }
@@ -268,7 +277,7 @@ namespace StandardImportToolPlugin
                 foreach (string cval in mapping.SpatialUnitOptions.SPUClassifier.ClassifierValues.Select(a => a.Description))
                 {
                     string mapped = mapping.SpatialUnitOptions.SPUClassifierMapping[cval];
-                    if (!DefaultRows.DefaultSPUsByName.ContainsKey(mapped))
+                    if (!defaultRows.DefaultSPUsByName.ContainsKey(mapped))
                     {
                         throw new Exception(String.Format("cannot find spatial unit {0} in the archive index", mapped));
                     }
@@ -276,7 +285,7 @@ namespace StandardImportToolPlugin
             }
             else if (mapping.SpatialUnitOptions.ClassifierMode == SpatialUnitClassifierMode.SingleDefaultSpatialUnit)
             {
-                if (!DefaultRows.DefaultSPUsByName.ContainsKey(mapping.SpatialUnitOptions.SingleDefaultSpatialUnit))
+                if (!defaultRows.DefaultSPUsByName.ContainsKey(mapping.SpatialUnitOptions.SingleDefaultSpatialUnit))
                 {
                     throw new ArgumentException(String.Format("Cannot find SPU named {0} in archive index", mapping.SpatialUnitOptions.SingleDefaultSpatialUnit));
                 }
@@ -289,9 +298,9 @@ namespace StandardImportToolPlugin
                 {
                     throw new Exception(string.Format("Species \"{0}\" is not mapped to a value in the archive index", s));
                 }
-                if (!DefaultRows.DefaultSpeciesTypeRowsByName
+                if (!defaultRows.DefaultSpeciesTypeRowsByName
                     .ContainsKey(mapping.SpeciesOptions.SpeciesTypeMappings[s]) &&
-                    !DefaultRows.DefaultNonForestTypeRowsByName
+                    !defaultRows.DefaultNonForestTypeRowsByName
                     .ContainsKey(mapping.SpeciesOptions.SpeciesTypeMappings[s]))
                 {
                     throw new Exception(
@@ -299,14 +308,14 @@ namespace StandardImportToolPlugin
                         mapping.SpeciesOptions.SpeciesTypeMappings[s]));
                 }
             }
-            foreach(var y in data.Yields)
+            foreach(var y in userdata.Yields)
             {
-                if(y.YieldCurve.Count != data.AgeClasses.Count)
+                if(y.YieldCurve.Count != userdata.AgeClasses.Count)
                 {
                     throw new Exception(
                         string.Format("yield curve with classifier set '{0}' has incorrect number of yield values. Expected: {1} got: {2}",
                             string.Join(",", y.Classifiers.OrderBy(a => a.Key).Select(a => a.Value)),
-                            data.AgeClasses.Count,
+                            userdata.AgeClasses.Count,
                             y.YieldCurve.Count));
                 }
             }
@@ -322,7 +331,7 @@ namespace StandardImportToolPlugin
             cbmsitlog.Initialize(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(OutputPath), "SITLog.txt"));
             CBMSIT.ProjectCreation.ProjectCreationStatus status = new CBMSIT.ProjectCreation.ProjectCreationStatus(cbmsitlog);
             log.Info("validating project");
-            Validate();
+            Validate(data, mapping, DefaultRows);
             log.Info("importing project");
             CBMProjectWriter writer = new CBMProjectWriter(data, mapping, OutputPath, aidb, DefaultRows, cbmsitlog, status);
             writer.Write();
