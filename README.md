@@ -1,7 +1,16 @@
 # StandardImportToolPlugin
-wrapper for Operational-Scale CBM-CFS3 standard import tool DLL, and sample import code.  
+StandardImportToolPlugin is a wrapper for Operational-Scale CBM-CFS3 standard import tool DLL. 
 
-Buid instructions (visual studio 2017)
+## Use cases
+  * Import an exisiting SIT formatted excel spreadsheet or MS Access database to a CBM3 project database from the command line
+  * Import SIT formatted text files to an CBM3 project database from the command line
+  * Create a CBM3 project database via configuration
+  * Build and use use as a library for a new .NET application
+
+## Buid instructions 
+
+Tested most recently with Visual Studio 2017, but older versions should work as well.
+
   * Install the Operational-Scale CBM-CF3 Toolbox
   
   * Add references to the following toolbox dll files:
@@ -20,6 +29,7 @@ tutorial6.xls which is referenced in example code is found by default in this di
 
 ## Command line usage
 
+If you want a binary copy instead of building please look [here](https://github.com/cat-cfs/StandardImportToolPlugin/releases)
 A quick example for importing the included [tutorial6.json](https://github.com/cat-cfs/StandardImportToolPlugin/blob/master/Examples/tutorial6.json) configuration file.  The output path, as specified in the config file itself will be created as a valid CBM-CFS3 project
 
 `StandardImportToolPlugin.exe -c "tutorial6.json"`
