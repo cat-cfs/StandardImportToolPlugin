@@ -37,6 +37,7 @@ namespace StandardImportToolPlugin
 
     public class Sitplugin
     {
+
         public static string ForestOnly = Global.StringUtilities.GetStringResource("SLPCForestOnlyClassifierValue");// "Forest Only";
 
         const string DefaultArchiveIndexPath = @"C:\Program Files (x86)\Operational-Scale CBM-CFS3\Admin\DBs\ArchiveIndex_Beta_Install.mdb";
@@ -227,7 +228,7 @@ namespace StandardImportToolPlugin
             validationErrors += validator.ValidateDisturbanceTypeMapping();
             validationErrors += validator.ValidateNonForestTypeMapping();
             validationErrors += validator.ValidateSpeciesMapping();
-            validationErrors += validator.ValidateDisturbanceTypeMapping();
+            validationErrors += validator.ValidateSPUMapping();
             if (validationErrors.Length > 0)
             {
                 throw new ArgumentException(validationErrors);
@@ -937,6 +938,13 @@ namespace StandardImportToolPlugin
 
         public void MapNonForest(string projectNonForestName, string defaultName)
         {
+            if (!DefaultRows.DefaultNonForestTypeRowsByName.ContainsKey(defaultName)&&
+                defaultName != Sitplugin.ForestOnly)
+            {
+                throw new ArgumentException(
+                    string.Format("Invalid non-forest cover type name '{0}'.", defaultName) +
+                        "Matches neither the values in the archive index nor the 'Forest_only' string");
+            }
             mapping.NonForestOptions.NonForestTypeMapping.Add(projectNonForestName, defaultName);
         }
         private static MappingOptions CreateEmptyMapping()
