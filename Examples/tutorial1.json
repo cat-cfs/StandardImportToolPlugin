@@ -1,5 +1,23 @@
 {
     "output_path": ".\\tutorial1\\tutorial1.mdb",
+    "mapping_config": {
+        "initialize_mapping": true,
+        "spatial_units": {
+            "mapping_mode": "SingleDefaultSpatialUnit",
+            "default_spuid": 17
+        },
+        "disturbance_types": null,
+        "species": {
+            "species_classifier": "Leading Species",
+            "species_mapping": [
+                {
+                    "user_species": "Nonforest",
+                    "default_species": "Not stocked"
+                }
+            ]
+        },
+        "nonforest": null
+    },
     "data": {
         "age_class": {
             "age_class_size": 5,
@@ -48,6 +66,38 @@
                 "sort": "SORT_BY_SW_AGE"
             }
         ],
+        "inventory": [
+            {
+                "classifier_set": [
+                    "Stand 1",
+                    "Luvisolic (E. Canada)",
+                    "Nonforest"
+                ],
+                "area": 10,
+                "age": 0,
+                "unfccc_land_class": 1
+            },
+            {
+                "classifier_set": [
+                    "Stand 2",
+                    "Brunisolic",
+                    "Nonforest"
+                ],
+                "area": 10,
+                "age": 0,
+                "unfccc_land_class": 1
+            },
+            {
+                "classifier_set": [
+                    "Stand 3",
+                    "Average",
+                    "Nonforest"
+                ],
+                "area": 10,
+                "age": 0,
+                "unfccc_land_class": 1
+            }
+        ],
         "transition_rules": [
             {
                 "classifier_set_source": [
@@ -62,120 +112,36 @@
                 ],
                 "disturbance_type": "Afforestation",
                 "percent": 100
-            },
-            {
-                "classifier_set_source": [
-                    "?",
-                    "?",
-                    "?"
-                ],
-                "classifier_set_target": [
-                    "?",
-                    "Red pine",
-                    "Forest Only"
-                ],
-                "disturbance_type": "Clear-cut with slash-burn",
-                "percent": 100
-            },
-            {
-                "classifier_set_source": [
-                    "?",
-                    "?",
-                    "?"
-                ],
-                "classifier_set_target": [
-                    "?",
-                    "Red pine",
-                    "Forest Only"
-                ],
-                "disturbance_type": "Wildfire",
-                "percent": 100
-            }
-        ],
-        "inventory": [
-            {
-                "classifier_set": [
-                    "Stand 1",
-                    "Nonforest",
-                    "Luvisolic (E. Canada)"
-                ],
-                "area": 10,
-                "age": 0,
-                "unfccc_land_class": 1
-            },
-            {
-                "classifier_set": [
-                    "Stand 2",
-                    "Nonforest",
-                    "Brunisolic"
-                ],
-                "area": 10,
-                "age": 0,
-                "unfccc_land_class": 1
-            },
-            {
-                "classifier_set": [
-                    "Stand 3",
-                    "Nonforest",
-                    "Average"
-                ],
-                "area": 10,
-                "age": 0,
-                "unfccc_land_class": 1
             }
         ],
         "yield": [
             {
                 "classifier_set": [
-                    "Stand 1",
-                    "Red pine",
-                    "Forest Only"
+                    "?",
+                    "?",
+                    "Nonforest"
                 ],
-                "leading_species_classifier_value": "Red pine",
+                "leading_species_classifier_value": "Not stocked",
                 "values": [
-                    0,
-                    0,
-                    0,
-                    27,
-                    84,
-                    155,
-                    217,
-                    271,
-                    317,
-                    353,
-                    382,
-                    406,
-                    426,
-                    426
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
                 ]
             },
             {
                 "classifier_set": [
-                    "Stand 2",
-                    "Red pine",
-                    "Forest Only"
-                ],
-                "leading_species_classifier_value": "Red pine",
-                "values": [
-                    0,
-                    0,
-                    0,
-                    27,
-                    84,
-                    155,
-                    217,
-                    271,
-                    317,
-                    353,
-                    382,
-                    406,
-                    426,
-                    426
-                ]
-            },
-            {
-                "classifier_set": [
-                    "Stand 3",
+                    "?",
                     "Red pine",
                     "Forest Only"
                 ],
@@ -198,23 +164,5 @@
                 ]
             }
         ]
-    },
-    "mapping_config": {
-        "initialize_mapping": true,
-        "spatial_units": {
-            "mapping_mode": "SingleDefaultSpatialUnit",
-            "default_spuid": 17
-        },
-        "disturbance_types": null,
-        "species": {
-            "species_classifier": "Leading Species",
-            "species_mapping": [
-                {
-                    "user_species": "Nonforest",
-                    "default_species": "Not stocked"
-                }
-            ]
-        },
-        "nonforest": null
     }
 }

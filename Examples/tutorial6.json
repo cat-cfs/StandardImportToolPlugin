@@ -65,11 +65,11 @@
         },
         {
           "user_nonforest_type": "Natural forest",
-          "default_nonforest_type": "Forest Only"
+          "default_nonforest_type": null
         },
         {
           "user_nonforest_type": "Control",
-          "default_nonforest_type": "Forest Only"
+          "default_nonforest_type": null
         }
       ]
     }
