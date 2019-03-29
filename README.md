@@ -1,6 +1,8 @@
 # StandardImportToolPlugin
 StandardImportToolPlugin is a wrapper for Operational-Scale CBM-CFS3 standard import tool DLL. 
 
+
+
 ## Use cases
   * Import an exisiting SIT formatted excel spreadsheet or MS Access database to a CBM3 project database from the command line
   * Import SIT formatted text files to an CBM3 project database from the command line
@@ -33,6 +35,8 @@ If you want a binary copy instead of building please look [here](https://github.
 A quick example for importing the included [tutorial6.json](https://github.com/cat-cfs/StandardImportToolPlugin/blob/master/Examples/tutorial6.json) configuration file.  The output path, as specified in the config file itself will be created as a valid CBM-CFS3 project
 
 `StandardImportToolPlugin.exe -c "tutorial6.json"`
+
+[Configuration documentation](https://github.com/cat-cfs/StandardImportToolPlugin/wiki/Configuration)
 
 ## Command line Examples
 The directory [Examples](https://github.com/cat-cfs/StandardImportToolPlugin/tree/master/Examples) contains a few command line examples.
