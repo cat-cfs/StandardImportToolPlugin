@@ -17,11 +17,11 @@ namespace StandardImportToolPlugin
         {
             Sitplugin sitplugin = null;
             JObject obj = JObject.Parse(json);
-            string outputPath = (string)obj["output_path"];
+            string outputPath = System.IO.Path.GetFullPath((string)obj["output_path"]);
             string archive_index_db_path = null;
             if (obj["archive_index_db_path"] != null)
             {
-                archive_index_db_path = (string)obj["archive_index_db_path"];
+                archive_index_db_path = System.IO.Path.GetFullPath((string)obj["archive_index_db_path"]);
             }
             var mappingConfig = obj["mapping_config"];
             if(mappingConfig == null)
@@ -39,7 +39,7 @@ namespace StandardImportToolPlugin
                 if (importConfig["path"] != null)
                 {
                     userData = Sitplugin.ParseSITData(
-                        path: (string)importConfig["path"],
+                        path: System.IO.Path.GetFullPath((string)importConfig["path"]),
                         AgeClassTableName: (string)importConfig["ageclass_table_name"],
                         ClassifiersTableName: (string)importConfig["classifiers_table_name"],
                         DisturbanceEventsTableName: (string)importConfig["disturbance_events_table_name"],
@@ -52,13 +52,13 @@ namespace StandardImportToolPlugin
                 else if (importConfig["ageclass_path"] != null)
                 {
                     userData = Sitplugin.ParseSITDataText(
-                        ageClassPath: (string)importConfig["ageclass_path"],
-                        classifiersPath: (string)importConfig["classifiers_path"],
-                        disturbanceEventsPath: (string)importConfig["disturbance_events_path"],
-                        disturbanceTypesPath: (string)importConfig["disturbance_types_path"],
-                        inventoryPath: (string)importConfig["inventory_path"],
-                        transitionRulesPath: (string)importConfig["transition_rules_path"],
-                        yieldPath: (string)importConfig["yield_path"]);
+                        ageClassPath: System.IO.Path.GetFullPath((string)importConfig["ageclass_path"]),
+                        classifiersPath: System.IO.Path.GetFullPath((string)importConfig["classifiers_path"]),
+                        disturbanceEventsPath: System.IO.Path.GetFullPath((string)importConfig["disturbance_events_path"]),
+                        disturbanceTypesPath: System.IO.Path.GetFullPath((string)importConfig["disturbance_types_path"]),
+                        inventoryPath: System.IO.Path.GetFullPath((string)importConfig["inventory_path"]),
+                        transitionRulesPath: System.IO.Path.GetFullPath((string)importConfig["transition_rules_path"]),
+                        yieldPath: System.IO.Path.GetFullPath((string)importConfig["yield_path"]));
                 }
                 else
                 {
@@ -207,7 +207,14 @@ namespace StandardImportToolPlugin
             sitplugin.SetNonForestClassifier((string)mappingConfig["nonforest_classifier"]);
             foreach (var item in mappingConfig["nonforest_mapping"])
             {
-                sitplugin.MapNonForest((string)item["user_nonforest_type"], (string)item["default_nonforest_type"]);
+
+                var default_nonforest_type = (string)item["default_nonforest_type"];
+                if (default_nonforest_type == null){
+                    //allow null here so that users are not forced 
+                    //to look up and use the localized "Forest Only" magic string
+                    default_nonforest_type = Sitplugin.ForestOnly;
+                }
+                sitplugin.MapNonForest((string)item["user_nonforest_type"], default_nonforest_type);
             }
         }
         private static void MapSpatialUnits(Sitplugin sitplugin, JToken mappingConfig)
