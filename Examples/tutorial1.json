@@ -1,17 +1,48 @@
 {
     "output_path": ".\\tutorial1\\tutorial1.mdb",
     "mapping_config": {
-        "initialize_mapping": true,
+        "initialize_mapping": false,
         "spatial_units": {
             "mapping_mode": "SingleDefaultSpatialUnit",
             "default_spuid": 17
         },
-        "disturbance_types": null,
+        "disturbance_types": {
+            "disturbance_type_mapping": [
+                {
+                    "user_dist_type": "Afforestation",
+                    "default_dist_type": "Afforestation"
+                },
+                {
+                    "user_dist_type": "Clear-cut with slash-burn",
+                    "default_dist_type": "Clear-cut with slash-burn"
+                },
+                {
+                    "user_dist_type": "Wildfire",
+                    "default_dist_type": "Wildfire"
+                }
+            ]
+        },
         "species": {
             "species_classifier": "Leading Species",
             "species_mapping": [
                 {
-                    "user_species": "Nonforest",
+                    "user_species": "Luvisolic (E. Canada)",
+                    "default_species": "Luvisolic (E. Canada)"
+                },
+                {
+                    "user_species": "Brunisolic",
+                    "default_species": "Brunisolic"
+                },
+                {
+                    "user_species": "Average",
+                    "default_species": "Average"
+                },
+                {
+                    "user_species": "Red pine",
+                    "default_species": "Red pine"
+                },
+                {
+                    "user_species": "Not stocked",
                     "default_species": "Not stocked"
                 }
             ]
