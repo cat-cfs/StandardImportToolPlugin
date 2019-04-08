@@ -1,13 +1,13 @@
 # StandardImportToolPlugin
-StandardImportToolPlugin is a wrapper for Operational-Scale CBM-CFS3 standard import tool DLL. 
+StandardImportToolPlugin is a wrapper for the Operational-Scale CBM-CFS3 standard import tool DLL. 
 
 
 
 ## Use cases
-  * Import an exisiting SIT formatted excel spreadsheet or MS Access database to a CBM3 project database from the command line
+  * Import an existing SIT formatted excel spreadsheet or MS Access database to a CBM3 project database from the command line
   * Import SIT formatted text files to an CBM3 project database from the command line
   * Create a CBM3 project database via configuration
-  * Build and use use as a library for a new .NET application
+  * Build and use as a library for a new .NET application
 
 ## Buid instructions 
 
@@ -26,9 +26,6 @@ The DLL files can be found in your installation directory. For example
 here:  
 `C:\Program Files (x86)\Operational-Scale CBM-CFS3\CBMSIT.dll`
 
-tutorial6.xls which is referenced in example code is found by default in this directory:
-`C:\Program Files (x86)\Operational-Scale CBM-CFS3\Tutorials\Tutorial 6`
-
 ## Command line usage
 
 If you want a binary copy instead of building please look [here](https://github.com/cat-cfs/StandardImportToolPlugin/releases)
@@ -39,6 +36,7 @@ A quick example for importing the included [tutorial6.json](https://github.com/c
 [Configuration documentation](https://github.com/cat-cfs/StandardImportToolPlugin/wiki/Configuration)
 
 ## Command line Examples
+
 The directory [Examples](https://github.com/cat-cfs/StandardImportToolPlugin/tree/master/Examples) contains a few command line examples.
   * dataConfig.json - shows an SIT import using json objects to define CBM inventory, yield, events, and transition rules
   * excel_import_example.json/excel_import_example.xls - shows a mapped import of CBM data in SIT form in an excel spreadsheet.
