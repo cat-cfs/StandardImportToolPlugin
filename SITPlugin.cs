@@ -323,19 +323,45 @@ namespace StandardImportToolPlugin
         }
         /// <summary>
         /// Import the data that is bound to this instance
+        /// 
         /// </summary>
-        public void Import()
+        /// <param name="append">If append is set to false (default), then run
+        /// the usual SIT import process.  If set to true, append the yield
+        /// curve, disturbance event and transition rule data as new CBM
+        /// assumptions in the existing project.</param>
+        public void Import(bool append=false)
         {
-
-            System.IO.File.Copy(inputTemplatePath, OutputPath, true);
             CBMSIT.Log cbmsitlog = new CBMSIT.Log();
-            cbmsitlog.Initialize(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(OutputPath), "SITLog.txt"));
+            if (!append)
+            {
+                System.IO.File.Copy(inputTemplatePath, OutputPath, true);
+                cbmsitlog.Initialize(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(OutputPath), "SITLog.txt"));
+            }
+            else
+            {
+                string append_path_fmt = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(OutputPath), "SITLog_append{0}.txt");
+                string append_path = string.Format(append_path_fmt, "");
+                int counter = 1;
+                while (System.IO.File.Exists(append_path))
+                {
+                    append_path = string.Format(append_path_fmt, counter);
+                }
+                cbmsitlog.Initialize(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(OutputPath), append_path));
+            }
             CBMSIT.ProjectCreation.ProjectCreationStatus status = new CBMSIT.ProjectCreation.ProjectCreationStatus(cbmsitlog);
             log.Info("validating project");
             Validate(data, mapping, DefaultRows);
             log.Info("importing project");
-            CBMProjectWriter writer = new CBMProjectWriter(data, mapping, OutputPath, aidb, DefaultRows, cbmsitlog, status);
-            writer.Write();
+            if (!append)
+            {
+                CBMProjectWriter writer = new CBMProjectWriter(data, mapping, OutputPath, aidb, DefaultRows, cbmsitlog, status);
+                writer.Write();
+            }
+            else
+            {
+                CBMProjectAppender appender = new CBMProjectAppender(data, mapping, OutputPath, aidb, DefaultRows, cbmsitlog, status);
+                appender.Write();
+            }
         }
 
         private DefaultRows FillDefaultRows(CBMDBObject DBObj)

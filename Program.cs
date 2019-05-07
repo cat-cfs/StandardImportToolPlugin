@@ -13,6 +13,20 @@ namespace StandardImportToolPlugin
             )]
         public string ConfigPath { get; set; }
 
+
+        [Option(
+         shortName: 'a',
+         longName: "append_mode",
+         Required = false,
+         Default = false,
+         HelpText = "If append_mode is set to false (default) sit import, "+
+           "then run the usual SIT import process.  If set to true, " +
+           "append the yield curve, disturbance event and transition rule data" +
+           "as new CBM assumptions in the existing project."
+         )]
+        public bool AppendMode { get; set; }
+
+
         [Option(
          shortName: 'l',
          longName: "culture_info",
@@ -48,7 +62,7 @@ namespace StandardImportToolPlugin
                 Sitplugin sitplugin = jsonConfigLoader.Load(json);
                 try
                 {
-                    sitplugin.Import();
+                    sitplugin.Import(options.AppendMode);
                 }
                 catch(CBMSIT.ProjectCreation.ProjectCreationException ex)
                 {
