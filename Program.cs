@@ -18,7 +18,6 @@ namespace StandardImportToolPlugin
          shortName: 'a',
          longName: "append_mode",
          Required = false,
-         Default = false,
          HelpText = "If append_mode is set to false (default) sit import, "+
            "then run the usual SIT import process.  If set to true, " +
            "append the yield curve, disturbance event and transition rule data" +
@@ -62,7 +61,7 @@ namespace StandardImportToolPlugin
                 Sitplugin sitplugin = jsonConfigLoader.Load(json);
                 try
                 {
-                    sitplugin.Import(options.AppendMode);
+                    sitplugin.Import(a.AppendMode);
                 }
                 catch(CBMSIT.ProjectCreation.ProjectCreationException ex)
                 {
