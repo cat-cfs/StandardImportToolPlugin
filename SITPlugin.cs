@@ -345,6 +345,7 @@ namespace StandardImportToolPlugin
                 while (System.IO.File.Exists(append_path))
                 {
                     append_path = string.Format(append_path_fmt, counter);
+                    counter++;
                 }
                 cbmsitlog.Initialize(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(OutputPath), append_path));
             }
