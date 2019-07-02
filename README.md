@@ -9,7 +9,7 @@ StandardImportToolPlugin is a wrapper for the Operational-Scale CBM-CFS3 standar
   * Create a CBM3 project database via configuration
   * Build and use as a library for a new .NET application
 
-## Buid instructions 
+## Build instructions 
 
 Tested most recently with Visual Studio 2017, but older versions should work as well.
 
