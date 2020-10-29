@@ -46,8 +46,7 @@ namespace StandardImportToolPlugin
                         DisturbanceTypesTableName: (string)importConfig["disturbance_types_table_name"],
                         InventoryTableName: (string)importConfig["inventory_table_name"],
                         TransitionRulesTableName: (string)importConfig["transition_rules_table_name"],
-                        YieldTableName: (string)importConfig["yield_table_name"]
-                        );
+                        YieldTableName: (string)importConfig["yield_table_name"]);
                 }
                 else if (importConfig["ageclass_path"] != null)
                 {

@@ -20,7 +20,7 @@ namespace StandardImportToolPlugin
          Required = false,
          HelpText = "If append_mode is set to false (default) sit import, "+
            "then run the usual SIT import process.  If set to true, " +
-           "append the yield curve, disturbance event and transition rule data" +
+           "append the yield curve, disturbance event and transition rule data " +
            "as new CBM assumptions in the existing project."
          )]
         public bool AppendMode { get; set; }

@@ -23,7 +23,9 @@ using System.Linq;
  * 
  * 
  */
+using CBMSIT;
 using CBMSIT.UserData;
+using CBMSIT.DBImport;
 using CBMSIT.Mapping;
 using CBMSIT.Controllers;
 using CBMSIT.ProjectCreation;
@@ -33,8 +35,6 @@ using System.Reflection;
 using log4net;
 namespace StandardImportToolPlugin
 {
-
-
     public class Sitplugin
     {
 
@@ -60,8 +60,8 @@ namespace StandardImportToolPlugin
         MappingOptions mapping;
 
         private Dictionary<string, Classifier> Classifiers = new Dictionary<string, Classifier>();
-        private Dictionary<int, HashSet<string>> ClassifierValues =
-            new Dictionary<int, HashSet<string>>();
+        private Dictionary<int, System.Collections.Generic.HashSet<string>> ClassifierValues =
+            new Dictionary<int, System.Collections.Generic.HashSet<string>>();
 
         /// <summary>
         /// Create a new sitplugin
@@ -204,15 +204,44 @@ namespace StandardImportToolPlugin
             {
                 log.Info("started importing SIT text");
                 UserDataSet data = new UserDataSet();
-                CBMSIT.TextImport.TextImporter importer = new CBMSIT.TextImport.TextImporter();
-                data.AgeClasses = importer.ParseAgeClasses(ageClassPath);
-                data.Classifiers = importer.ParseClassifiers(classifiersPath);
-                data.DisturbanceTypes = importer.ParseDisturbanceTypes(disturbanceTypesPath);
-                data.DisturbanceEvents = importer.ParseDisturbanceEvents(disturbanceEventsPath);
+                var importType = CBMSIT.ImportTypes.GetImportType(ageClassPath);
+                if (importType == CBMSIT.ImportType.SITText)
+                {
+                    CBMSIT.TextImport.TextImporter importer = new CBMSIT.TextImport.TextImporter();
+                    data.AgeClasses = importer.ParseAgeClasses(ageClassPath);
+                    data.Classifiers = importer.ParseClassifiers(classifiersPath);
+                    data.DisturbanceTypes = importer.ParseDisturbanceTypes(disturbanceTypesPath);
+                    data.DisturbanceEvents = importer.ParseDisturbanceEvents(disturbanceEventsPath);
 
-                data.Inventories = importer.ParseInventory(inventoryPath);
-                data.TransitionRules = importer.ParseTransitionRules(transitionRulesPath);
-                data.Yields = importer.ParseYields(yieldPath);
+                    data.Inventories = importer.ParseInventory(inventoryPath);
+                    data.TransitionRules = importer.ParseTransitionRules(transitionRulesPath);
+                    data.Yields = importer.ParseYields(yieldPath);
+                }
+                else
+                {
+                    DelimitedFileImporter delimitedFileImporter = new DelimitedFileImporter(
+                        ImportTypes.GetDelimiter(importType));
+                    CBMSIT.DBImport.DBImporter d = new CBMSIT.DBImport.DBImporter(
+                        delimitedFileImporter,
+                        ageClassPath,
+                        classifiersPath,
+                        disturbanceEventsPath,
+                        disturbanceTypesPath,
+                        "",
+                        inventoryPath,
+                        transitionRulesPath,
+                        yieldPath, false);
+
+                    d.Import();
+
+                    data.AgeClasses = d.AgeClasses;
+                    data.Classifiers = d.Classifiers;
+                    data.DisturbanceTypes = d.DisturbanceTypes;
+                    data.DisturbanceEvents = d.DisturbanceEvents;
+                    data.TransitionRules = d.TransitionRules;
+                    data.Inventories = d.Inventories;
+                    data.Yields = d.Yields;
+                }
                 return data;
             }
             catch (Exception ex)
